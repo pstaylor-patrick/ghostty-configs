@@ -1,1 +1,6 @@
 window-padding-y = 0,24
+
+# tmux integration
+# Use xterm-256color for broad compatibility (remote hosts, older systems).
+# Ghostty's terminfo is auto-detected for direct (non-tmux) sessions.
+term = xterm-256color
