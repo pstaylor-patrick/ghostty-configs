@@ -1,3 +1,7 @@
+# Enforce minimum contrast ratio to prevent near-white text on light background
+# (e.g. Claude Code true-color syntax highlighting that bypasses the palette)
+minimum-contrast = 1.3
+
 palette = 0=#073642
 palette = 1=#a82a28
 palette = 2=#546200
