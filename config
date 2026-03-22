@@ -1,5 +1,5 @@
 window-padding-y = 0,24
-theme = Loom Light Blue
+theme = Loom PowerShell
 
 # tmux compatibility:
 # Do NOT set `term` here — Ghostty auto-detects xterm-ghostty for direct sessions.

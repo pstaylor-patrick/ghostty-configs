@@ -6,13 +6,13 @@
 ghostty_theme_cycle() {
   [ "$TERM_PROGRAM" = "ghostty" ] || return 0
 
-  # Curated theme rotation: 4 light, 1 dark
+  # Curated theme rotation: 3 light, 2 dark
   local -a theme_names=(
-    "Loom Light Blue"
+    "Loom PowerShell"
     "Loom Warm Cream"
     "Loom Sage"
     "Loom Lavender"
-    "Loom Dark"
+    "Loom Homebrew"
   )
 
   local index_file="$HOME/.config/ghostty/.theme-index"
