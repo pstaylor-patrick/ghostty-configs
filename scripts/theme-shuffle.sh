@@ -6,12 +6,12 @@
 ghostty_theme_cycle() {
   [ "$TERM_PROGRAM" = "ghostty" ] || return 0
 
-  # Curated theme rotation: 3 light, 2 dark
+  # Curated theme rotation: 1 light, 4 dark — all WCAG AA compliant
   local -a theme_names=(
     "Loom PowerShell"
-    "Loom Warm Cream"
-    "Loom Sage"
-    "Loom Lavender"
+    "Loom Amber CRT"
+    "Loom Solarized Light"
+    "Loom Dracula"
     "Loom Homebrew"
   )
 
