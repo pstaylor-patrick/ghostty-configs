@@ -29,6 +29,17 @@ link_file() {
 link_file "$REPO_DIR/config" "$GHOSTTY_DIR/config"
 link_file "$REPO_DIR/scripts/theme-shuffle.sh" "$GHOSTTY_DIR/theme-shuffle.sh"
 
+# Symlink custom themes directory
+if [[ -L "$GHOSTTY_DIR/themes" ]]; then
+  echo "  Updating symlink: $GHOSTTY_DIR/themes"
+  rm "$GHOSTTY_DIR/themes"
+elif [[ -d "$GHOSTTY_DIR/themes" ]]; then
+  echo "  Backing up existing themes: $GHOSTTY_DIR/themes → $GHOSTTY_DIR/themes.bak"
+  mv "$GHOSTTY_DIR/themes" "$GHOSTTY_DIR/themes.bak"
+fi
+ln -s "$REPO_DIR/themes" "$GHOSTTY_DIR/themes"
+echo "  Linked: $GHOSTTY_DIR/themes → $REPO_DIR/themes"
+
 echo ""
 echo "Done! Make sure your ~/.zshrc contains:"
 echo '  [ -f "$HOME/.config/ghostty/theme-shuffle.sh" ] && source "$HOME/.config/ghostty/theme-shuffle.sh"'
