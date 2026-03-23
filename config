@@ -1,5 +1,10 @@
 window-padding-y = 0,24
 
+# Prevent near-invisible text when true-color apps (e.g. Claude Code) emit
+# colors close to the background. 1.3 is just above identity — only corrects
+# text that would otherwise be unreadable. Safe for all themes.
+minimum-contrast = 1.3
+
 # tmux compatibility:
 # Do NOT set `term` here — Ghostty auto-detects xterm-ghostty for direct sessions.
 # For tmux, add this to ~/.tmux.conf instead:
