@@ -6,8 +6,8 @@
 # Curated theme rotation: 1 light, 2 dark — all WCAG AA compliant
 GHOSTTY_THEMES=(
   "Loom PowerShell"
-  "Loom Solarized Light"
   "Loom Homebrew"
+  "Loom Solarized Light"
 )
 
 # Apply a theme by name via OSC escape sequences
