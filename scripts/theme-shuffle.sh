@@ -1,12 +1,12 @@
-# Ghostty Curated Theme Cycler
-# Cycles deterministically through 3 WCAG AA-compliant themes, one per new tab.
-# Uses an index file to track position in the rotation.
+# Ghostty Theme Switcher
+# Applies Loom Homebrew as the default theme on every new tab.
+# T1–T3 aliases allow explicit switching to other preset themes.
 # Source this file from ~/.zshrc.
 
-# Curated theme rotation: 1 light, 2 dark — all WCAG AA compliant
+# Preset themes: T1 is the default, T2/T3 available on demand
 GHOSTTY_THEMES=(
-  "Loom PowerShell"
   "Loom Homebrew"
+  "Loom PowerShell"
   "Loom Solarized Light"
 )
 
@@ -47,28 +47,9 @@ ghostty_apply_theme() {
   printf '\e[2m░ %s\e[0m\n' "$theme_name"
 }
 
-# Cycle through themes on new tab
-ghostty_theme_cycle() {
-  [ "$TERM_PROGRAM" = "ghostty" ] || return 0
-
-  local index_file="$HOME/.config/ghostty/.theme-index"
-  local count=${#GHOSTTY_THEMES[@]}
-
-  local idx=0
-  if [[ -f "$index_file" ]]; then
-    idx=$(cat "$index_file" 2>/dev/null)
-    if ! [[ "$idx" =~ ^[0-9]+$ ]] || [[ $idx -ge $count ]]; then
-      idx=0
-    fi
-  fi
-
-  local theme_name="${GHOSTTY_THEMES[$((idx + 1))]}"  # zsh arrays are 1-based
-
-  # Write next index atomically
-  local next_idx=$(( (idx + 1) % count ))
-  echo "$next_idx" > "$index_file"
-
-  ghostty_apply_theme "$theme_name"
+# Apply default theme (T1) on every new tab
+ghostty_apply_default() {
+  ghostty_apply_theme "${GHOSTTY_THEMES[1]}"
 }
 
 # T1–T3: quick-switch aliases for each preset theme
@@ -76,4 +57,4 @@ T1() { ghostty_apply_theme "${GHOSTTY_THEMES[1]}"; }
 T2() { ghostty_apply_theme "${GHOSTTY_THEMES[2]}"; }
 T3() { ghostty_apply_theme "${GHOSTTY_THEMES[3]}"; }
 
-ghostty_theme_cycle
+ghostty_apply_default
