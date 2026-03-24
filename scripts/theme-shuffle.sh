@@ -1,12 +1,13 @@
 # Ghostty Theme Switcher
 # Applies Loom Homebrew as the default theme on every new tab.
-# T1–T3 aliases allow explicit switching to other preset themes.
+# T1–T4 aliases allow explicit switching to other preset themes.
 # Source this file from ~/.zshrc.
 
-# Preset themes: T1 is the default, T2/T3 available on demand
+# Preset themes: T1 is the default, T2–T4 available on demand
 GHOSTTY_THEMES=(
   "Loom Homebrew"
   "Loom PowerShell"
+  "Loom Charcoal Light"
   "Loom Solarized Light"
 )
 
@@ -52,9 +53,10 @@ ghostty_apply_default() {
   ghostty_apply_theme "${GHOSTTY_THEMES[1]}"
 }
 
-# T1–T3: quick-switch aliases for each preset theme
+# T1–T4: quick-switch aliases for each preset theme
 T1() { ghostty_apply_theme "${GHOSTTY_THEMES[1]}"; }
 T2() { ghostty_apply_theme "${GHOSTTY_THEMES[2]}"; }
 T3() { ghostty_apply_theme "${GHOSTTY_THEMES[3]}"; }
+T4() { ghostty_apply_theme "${GHOSTTY_THEMES[4]}"; }
 
 ghostty_apply_default
