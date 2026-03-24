@@ -1,14 +1,12 @@
 # Ghostty Curated Theme Cycler
-# Cycles deterministically through 5 WCAG AA-compliant themes, one per new tab.
+# Cycles deterministically through 3 WCAG AA-compliant themes, one per new tab.
 # Uses an index file to track position in the rotation.
 # Source this file from ~/.zshrc.
 
-# Curated theme rotation: 1 light, 4 dark — all WCAG AA compliant
+# Curated theme rotation: 1 light, 2 dark — all WCAG AA compliant
 GHOSTTY_THEMES=(
   "Loom PowerShell"
-  "Loom Amber CRT"
   "Loom Solarized Light"
-  "Loom Dracula"
   "Loom Homebrew"
 )
 
@@ -73,11 +71,9 @@ ghostty_theme_cycle() {
   ghostty_apply_theme "$theme_name"
 }
 
-# T1–T5: quick-switch aliases for each preset theme
+# T1–T3: quick-switch aliases for each preset theme
 T1() { ghostty_apply_theme "${GHOSTTY_THEMES[1]}"; }
 T2() { ghostty_apply_theme "${GHOSTTY_THEMES[2]}"; }
 T3() { ghostty_apply_theme "${GHOSTTY_THEMES[3]}"; }
-T4() { ghostty_apply_theme "${GHOSTTY_THEMES[4]}"; }
-T5() { ghostty_apply_theme "${GHOSTTY_THEMES[5]}"; }
 
 ghostty_theme_cycle
