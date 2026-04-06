@@ -1,48 +1,28 @@
-# Ghostty Curated Theme Cycler
-# Cycles deterministically through 5 WCAG AA-compliant themes, one per new tab.
-# Uses an index file to track position in the rotation.
+# Ghostty Theme Switcher
+# Applies Loom Homebrew as the default theme on every new tab.
+# T1–T4 aliases allow explicit switching to other preset themes.
 # Source this file from ~/.zshrc.
 
-ghostty_theme_cycle() {
+# Preset themes: T1 is the default, T2–T4 available on demand
+GHOSTTY_THEMES=(
+  "Loom Homebrew"
+  "Loom PowerShell"
+  "Loom Charcoal Light"
+  "Loom Solarized Light"
+)
+
+# Apply a theme by name via OSC escape sequences
+ghostty_apply_theme() {
   [ "$TERM_PROGRAM" = "ghostty" ] || return 0
 
-  # Curated theme rotation: 1 light, 4 dark — all WCAG AA compliant
-  local -a theme_names=(
-    "Loom PowerShell"
-    "Loom Amber CRT"
-    "Loom Solarized Light"
-    "Loom Dracula"
-    "Loom Homebrew"
-  )
+  local theme_name="$1"
+  local theme_file="$HOME/.config/ghostty/themes/$theme_name"
 
-  local index_file="$HOME/.config/ghostty/.theme-index"
-  local custom_dir="$HOME/.config/ghostty/themes"
-  local count=${#theme_names[@]}
-
-  # Read current index (0-based), default to 0
-  local idx=0
-  if [[ -f "$index_file" ]]; then
-    idx=$(cat "$index_file" 2>/dev/null)
-    # Validate it's a number in range
-    if ! [[ "$idx" =~ ^[0-9]+$ ]] || [[ $idx -ge $count ]]; then
-      idx=0
-    fi
-  fi
-
-  local theme_name="${theme_names[$((idx + 1))]}"  # zsh arrays are 1-based
-  local theme_file="$custom_dir/$theme_name"
-
-  # Write next index atomically
-  local next_idx=$(( (idx + 1) % count ))
-  echo "$next_idx" > "$index_file"
-
-  # Bail if theme file is missing
   if [[ ! -f "$theme_file" ]]; then
     printf '\e[2m░ theme not found: %s\e[0m\n' "$theme_name"
     return 1
   fi
 
-  # Parse and apply via OSC escape sequences
   while IFS= read -r line; do
     [[ "$line" =~ ^[[:space:]]*# ]] && continue
     [[ -z "${line// /}" ]] && continue
@@ -65,8 +45,18 @@ ghostty_theme_cycle() {
     esac
   done < "$theme_file"
 
-  # Subtle theme name display
   printf '\e[2m░ %s\e[0m\n' "$theme_name"
 }
 
-ghostty_theme_cycle
+# Apply default theme (T1) on every new tab
+ghostty_apply_default() {
+  ghostty_apply_theme "${GHOSTTY_THEMES[1]}"
+}
+
+# T1–T4: quick-switch aliases for each preset theme
+T1() { ghostty_apply_theme "${GHOSTTY_THEMES[1]}"; }
+T2() { ghostty_apply_theme "${GHOSTTY_THEMES[2]}"; }
+T3() { ghostty_apply_theme "${GHOSTTY_THEMES[3]}"; }
+T4() { ghostty_apply_theme "${GHOSTTY_THEMES[4]}"; }
+
+ghostty_apply_default
